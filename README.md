@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div align="center">
 
 <h1>🌆 WordPress-MyCity</h1>
@@ -118,3 +119,7 @@ npm run build
 # 7. نصب وردپرس
 # از طریق مرورگر به آدرس پروژه بروید و مراحل نصب را کامل کنید
 ```
+=======
+# WordPress-AbdOliSoft
+A modern, responsive custom WordPress theme for a fictional software development company, built from scratch with PHP, WordPress, HTML, CSS, and Tailwind CSS.
+>>>>>>> c0fc78df573fe06ea0c1d5e3301ef6f23bbf8b3e
