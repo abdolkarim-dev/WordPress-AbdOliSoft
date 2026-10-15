@@ -4,7 +4,7 @@ add_action('after_setup_theme', 'ahel_theme_setup');
 function ahel_theme_setup()
 {
   register_nav_menus([
-    'primary' => ' Main Menu',
+    'primary' => 'Main Menu',
   ]);
   add_theme_support('post-thumbnails');
 }

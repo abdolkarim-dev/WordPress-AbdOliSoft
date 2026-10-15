@@ -1,6 +1,12 @@
 <?php
- 
-?> 
+$menu_name = "primary";
+$locations = get_nav_menu_locations();
+$current_url = home_url(add_query_arg([], $wp->request));
+$current_url = untrailingslashit($current_url);
+$menu_items = isset($locations[$menu_name])
+    ? wp_get_nav_menu_items($locations[$menu_name])
+    : [];
+?>
 
 <!DOCTYPE html>
 <html dir="ltr" <?php language_attributes(); ?>>
@@ -28,29 +34,17 @@
             </a>
 
             <nav class="hidden md:flex items-center gap-1 bg-gray-50 border border-gray-100 rounded-xl p-1">
-                <a href="#" class="px-4 py-2 rounded-lg bg-white shadow-sm text-primary text-sm font-medium">
-                    Home
-                </a>
+                <?php foreach ($menu_items as $item):
+                    $is_active = $current_url === untrailingslashit($item->url);
+                    ?>
+                    <a href="<?php echo esc_url($item->url); ?>" class="px-4 py-2 rounded-lg text-sm font-medium transition
+                    <?php echo $is_active
+                        ? 'bg-white shadow-sm text-primary'
+                        : 'text-gray-600 hover:text-primary hover:bg-white'; ?>">
+                        <?php echo esc_html($item->title); ?>
+                    </a>
+                <?php endforeach; ?>
 
-                <a href="#services"
-                    class="px-4 py-2 rounded-lg text-gray-600 hover:text-primary hover:bg-white transition text-sm font-medium">
-                    Services
-                </a>
-
-                <a href="#projects"
-                    class="px-4 py-2 rounded-lg text-gray-600 hover:text-primary hover:bg-white transition text-sm font-medium">
-                    Projects
-                </a>
-
-                <a href="#about"
-                    class="px-4 py-2 rounded-lg text-gray-600 hover:text-primary hover:bg-white transition text-sm font-medium">
-                    About
-                </a>
-
-                <a href="#process"
-                    class="px-4 py-2 rounded-lg text-gray-600 hover:text-primary hover:bg-white transition text-sm font-medium">
-                    Process
-                </a>
             </nav>
 
             <a href="#contact"
