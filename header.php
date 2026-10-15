@@ -47,10 +47,62 @@ $menu_items = isset($locations[$menu_name])
 
             </nav>
 
-            <a href="#contact"
-                class="hidden md:flex items-center gap-2 px-6 py-2.5 bg-primary text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition">
-                Let's Talk
-            </a>
+
+            <!-- Search Container -->
+            <div id="header-search" class="relative hidden md:flex items-center">
+
+                <!-- Search Input -->
+                <form id="header-search-form" action="<?php echo esc_url(home_url('/')); ?>" method="get" role="search"
+                    class="absolute right-0 top-1/2 -translate-y-1/2
+                    w-0 opacity-0 pointer-events-none overflow-hidden
+                    transition-all duration-300 ease-in-out
+                    [&.is-open]:w-[280px]
+                    [&.is-open]:opacity-100
+                    [&.is-open]:pointer-events-auto">
+
+                    <div class="flex items-center h-10 pl-3 pr-1.5
+                        rounded-xl border border-gray-200
+                        bg-white shadow-lg shadow-gray-900/5
+                        focus-within:border-primary">
+
+                        <input id="header-search-input" type="search" name="s" placeholder="Search anything..."
+                            aria-label="Search the website" class="w-full min-w-0 bg-transparent text-sm
+                         text-gray-800 placeholder-gray-400 outline-none" />
+
+                        <button type="submit" aria-label="Submit search" class="shrink-0 flex items-center justify-center
+                        w-8 h-8 rounded-lg bg-primary text-white
+                        hover:bg-emerald-700 transition">
+
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <circle cx="11" cy="11" r="7" stroke-width="2" />
+                                <path d="m16 16 4 4" stroke-width="2" stroke-linecap="round" />
+                            </svg>
+                        </button>
+                    </div>
+                </form> 
+                <button id="search-toggle"
+                    class="hidden md:flex items-center justify-center w-10 h-10 bg-gray-50 border border-gray-100 rounded-xl text-gray-600 hover:text-primary hover:bg-white hover:shadow-sm transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
+
+                <!-- Search Toggle -->
+                <!-- <button id="search-toggle" type="button" aria-label="Open search" aria-expanded="false" class="relative z-10 flex items-center justify-center
+                    w-10 h-10 bg-gray-50 border border-gray-100
+                    rounded-xl text-gray-600
+                    hover:text-primary hover:bg-white
+                    hover:shadow-sm transition">
+
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button> -->
+
+            </div>
+
 
             <button class="md:hidden text-xl">☰</button>
         </div>
