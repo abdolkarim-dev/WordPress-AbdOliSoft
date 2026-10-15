@@ -169,12 +169,8 @@ Visit your local WordPress website in a browser to explore the theme and its pag
 WordPress-AbdOliSoft/
 ├── inc/
 │   ├── setup.php
-│   ├── theme.php
-│   ├── council.php
-│   ├── benefactor.php
-│   ├── mayor.php
-│   ├── site-settings.php
-│   └── contact.php
+│   ├── theme.php 
+│   ├── site-settings.php 
 ├── src/
 │   ├── input.css
 │   ├── output.css

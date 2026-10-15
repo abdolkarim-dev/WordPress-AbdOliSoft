@@ -5,11 +5,8 @@ define('DIRECTORY', get_template_directory());
 $inc_files = [
     'setup.php',
     'theme.php',
-    'council.php',
-    'benefactor.php',
-    'mayor.php',
     'site-settings.php',
-    'contact.php'
+    'CustomPostForSinglePage.php'
 ];
 
 foreach ($inc_files as $file) {
