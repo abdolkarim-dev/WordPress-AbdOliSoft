@@ -14,11 +14,11 @@ A custom-designed website for a fictional software development company, built fr
 
 📸 Screenshots
 
-<div align="center">
-  <img src="screenshots/home.png" width="48%" alt="AbdOliSoft Homepage" />
-  <img src="screenshots/about.png" width="48%" alt="AbdOliSoft About Page" />
-  <img src="screenshots/services.png" width="48%" alt="AbdOliSoft Services Page" />
-  <img src="screenshots/projects.png" width="48%" alt="AbdOliSoft Projects Page" />
+<div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center;">
+  <img src="src/img/screenshots/home.png"   alt="AbdOliSoft Homepage" style="width:23%; min-width:150px; aspect-ratio:16/9; object-fit:cover; object-position:top; border-radius:8px;"/>
+  <img src="src/img/screenshots/project.png"   alt="AbdOliSoft About Page"style="width:23%; min-width:150px; aspect-ratio:16/9; object-fit:cover; object-position:top; border-radius:8px;" />
+  <img src="src/img/screenshots/mobile1.png"   alt="AbdOliSoft Services Page"style="width:23%; min-width:150px; aspect-ratio:16/9; object-fit:cover; object-position:top; border-radius:8px;" />
+  <img src="src/img/screenshots/mobile2.png"   alt="AbdOliSoft Projects Page"style="width:23%; min-width:150px; aspect-ratio:16/9; object-fit:cover; object-position:top; border-radius:8px;" />
 </div>
 
 ✨ About the Project
