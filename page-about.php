@@ -1,11 +1,9 @@
 <?php
 
 get_header();
-
-
+ 
 $site_settings = get_option('mycity_site_settings', []);
 ?>
-
 
 <section class="bg-[#eef1ee] relative overflow-hidden pt-40 pb-24">
   <div class="absolute inset-0 opacity-[0.30]" style="
