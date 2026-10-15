@@ -24,16 +24,16 @@
 
                 <ul class="mt-5 space-y-3 text-sm text-gray-500">
                     <li>
-                        <a href="#about" class="hover:text-primary transition">About</a>
+                        <a href="<?php echo esc_url(home_url('/about')); ?>" class="hover:text-primary transition">About</a>
                     </li>
                     <li>
-                        <a href="#services" class="hover:text-primary transition">Services</a>
+                        <a href="<?php echo esc_url(home_url('/services')); ?>" class="hover:text-primary transition">Services</a>
                     </li>
                     <li>
-                        <a href="#projects" class="hover:text-primary transition">Projects</a>
+                        <a href="<?php echo esc_url(home_url('/projects')); ?>" class="hover:text-primary transition">Projects</a>
                     </li>
                     <li>
-                        <a href="#contact" class="hover:text-primary transition">Contact</a>
+                        <a href="<?php echo esc_url(home_url('/about')); ?>" class="hover:text-primary transition">About</a>
                     </li>
                 </ul>
             </div>
@@ -72,4 +72,5 @@
 <?php wp_footer(); ?>
 
 </body>
+
 </html>

@@ -94,7 +94,7 @@ $site_settings = get_option('mycity_site_settings', []);
               class="px-4 py-2 rounded-lg border border-gray-200 text-sm font-medium text-gray-600 hover:border-primary hover:text-primary transition">
               GitHub
             </a>
-            <a href="https://www.linkedin.com/in/abd..."
+            <a href="https://www.linkedin.com/in/abdolkarim-bazdar-2b2ba6107"
               class="px-4 py-2 rounded-lg border border-gray-200 text-sm font-medium text-gray-600 hover:border-primary hover:text-primary transition">
               LinkedIn
             </a>
@@ -159,7 +159,7 @@ $site_settings = get_option('mycity_site_settings', []);
             <button type="submit"
               class="inline-flex items-center gap-2 px-7 py-3.5 bg-gray-950 text-white rounded-lg text-sm font-medium hover:bg-primary transition">
               Send message
-              <span>↗</span>
+
             </button>
           </div>
         </form>
@@ -181,7 +181,6 @@ $site_settings = get_option('mycity_site_settings', []);
       <a href="mailto:bazdarabdolkarim@gmail.com"
         class="inline-flex items-center gap-2 mt-8 px-7 py-3.5 border border-gray-300 text-gray-900 rounded-lg text-sm font-medium hover:border-primary hover:text-primary transition">
         Email us directly
-        <span>↗</span>
       </a>
     </div>
   </div>
