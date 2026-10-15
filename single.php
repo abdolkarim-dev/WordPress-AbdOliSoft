@@ -1,6 +1,32 @@
 <?php
 get_header();
 
+// ===== دریافت متا =====
+$client      = get_post_meta(get_the_ID(), '_project_client', true);
+$year        = get_post_meta(get_the_ID(), '_project_year', true);
+$live_url    = get_post_meta(get_the_ID(), '_project_live_url', true);
+$source_url  = get_post_meta(get_the_ID(), '_project_source_url', true);
+$hero_number = get_post_meta(get_the_ID(), '_project_hero_number', true);
+
+// تکنولوژی‌ها (آرایه)
+$technologies = get_post_meta(get_the_ID(), '_project_technologies', true);
+if (!is_array($technologies)) {
+    $technologies = $technologies
+        ? array_map('trim', explode(',', $technologies))
+        : [];
+}
+$technologies = array_filter($technologies);
+
+// ===== دسته‌بندی (برای Breadcrumb) =====
+$categories = get_the_category();
+$primary_cat = !empty($categories) ? $categories[0] : null;
+
+// ===== عنوان شکسته =====
+// عنوان رو به دو بخش تقسیم می‌کنیم: کلمه آخر با رنگ primary
+$title_raw  = get_the_title();
+$title_words = explode(' ', $title_raw);
+$title_last  = array_pop($title_words);
+$title_main  = implode(' ', $title_words);
 ?>
 
 <section class="bg-[#eef1ee] relative overflow-hidden pt-40 pb-24">
@@ -17,25 +43,35 @@ get_header();
     <div class="max-w-3xl">
       <!-- Breadcrumb -->
       <div class="flex items-center gap-3 text-xs mb-7">
-        <a href="projects.html" class="text-primary font-semibold uppercase tracking-wider hover:underline">
+        <a href="<?php echo esc_url(get_post_type_archive_link('post') ?: home_url('/projects/')); ?>"
+           class="text-primary font-semibold uppercase tracking-wider hover:underline">
           Projects
         </a>
-        <span class="text-gray-400">/</span>
-        <span class="text-gray-500 uppercase tracking-wider font-medium">
-          React / TypeScript
-        </span>
+
+        <?php if ($primary_cat): ?>
+          <span class="text-gray-400">/</span>
+          <a href="<?php echo esc_url(get_category_link($primary_cat->term_id)); ?>"
+             class="text-gray-500 uppercase tracking-wider font-medium hover:text-primary transition">
+            <?php echo esc_html($primary_cat->name); ?>
+          </a>
+        <?php endif; ?>
       </div>
 
+      <!-- Title -->
       <h1 class="text-5xl md:text-6xl xl:text-7xl font-bold tracking-[-0.05em] leading-[.95]">
-        Business
-        <br />
-        <span class="text-primary">Platform.</span>
+        <?php echo esc_html($title_main); ?>
+        <?php if ($title_last): ?>
+          <br />
+          <span class="text-primary"><?php echo esc_html($title_last); ?>.</span>
+        <?php endif; ?>
       </h1>
 
-      <p class="mt-8 max-w-xl text-lg text-gray-500 leading-8">
-        A modern platform for managing business operations — built with a
-        focus on speed, clarity and scalability.
-      </p>
+      <!-- Excerpt -->
+      <?php if (has_excerpt()): ?>
+        <p class="mt-8 max-w-xl text-lg text-gray-500 leading-8">
+          <?php echo esc_html(get_the_excerpt()); ?>
+        </p>
+      <?php endif; ?>
     </div>
   </div>
 </section>
@@ -47,18 +83,35 @@ get_header();
 
     <!-- Featured Visual -->
     <div class="aspect-[16/9] rounded-2xl bg-gray-950 overflow-hidden relative mb-16">
-      <div class="absolute inset-0 opacity-20" style="
-              background-image:
-                linear-gradient(#ffffff 1px, transparent 1px),
-                linear-gradient(90deg, #ffffff 1px, transparent 1px);
-              background-size: 50px 50px;
-            "></div>
+
+      <?php if (has_post_thumbnail()): ?>
+        <!-- تصویر شاخص -->
+        <?php the_post_thumbnail('full', [
+          'class' => 'absolute inset-0 w-full h-full object-cover',
+          'alt'   => esc_attr(get_the_title()),
+        ]); ?>
+        <div class="absolute inset-0 bg-black/40"></div>
+      <?php else: ?>
+        <!-- پس‌زمینه گرید پیش‌فرض -->
+        <div class="absolute inset-0 opacity-20" style="
+                background-image:
+                  linear-gradient(#ffffff 1px, transparent 1px),
+                  linear-gradient(90deg, #ffffff 1px, transparent 1px);
+                background-size: 50px 50px;
+              "></div>
+      <?php endif; ?>
 
       <div class="absolute inset-0 flex items-center justify-center">
-        <div class="text-center">
-          <span class="text-primary font-mono text-sm">01</span>
+        <div class="text-center px-6">
+          <?php if ($hero_number): ?>
+            <span class="text-primary font-mono text-sm"><?php echo esc_html($hero_number); ?></span>
+          <?php endif; ?>
+
           <h2 class="text-5xl md:text-6xl font-bold text-white mt-4">
-            Business<br />Platform
+            <?php echo esc_html($title_main); ?>
+            <?php if ($title_last): ?>
+              <br /><?php echo esc_html($title_last); ?>
+            <?php endif; ?>
           </h2>
         </div>
       </div>
@@ -68,99 +121,94 @@ get_header();
     <div class="grid sm:grid-cols-3 gap-6 pb-10 border-b border-gray-200">
       <div>
         <p class="text-xs uppercase tracking-wider text-gray-400 font-semibold">Client</p>
-        <p class="text-base font-medium mt-2">Acme Corp</p>
+        <p class="text-base font-medium mt-2"><?php echo esc_html($client ?: '—'); ?></p>
       </div>
 
       <div>
         <p class="text-xs uppercase tracking-wider text-gray-400 font-semibold">Year</p>
-        <p class="text-base font-medium mt-2">2026</p>
+        <p class="text-base font-medium mt-2"><?php echo esc_html($year ?: '—'); ?></p>
       </div>
 
       <div>
         <p class="text-xs uppercase tracking-wider text-gray-400 font-semibold">Technologies</p>
         <div class="flex flex-wrap gap-2 mt-2">
-          <span class="text-xs px-2.5 py-1 rounded-md bg-primary/10 text-primary font-medium">React</span>
-          <span class="text-xs px-2.5 py-1 rounded-md bg-primary/10 text-primary font-medium">TypeScript</span>
-          <span class="text-xs px-2.5 py-1 rounded-md bg-primary/10 text-primary font-medium">Tailwind</span>
+          <?php if (!empty($technologies)): ?>
+            <?php foreach ($technologies as $tech): ?>
+              <span class="text-xs px-2.5 py-1 rounded-md bg-primary/10 text-primary font-medium">
+                <?php echo esc_html($tech); ?>
+              </span>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <span class="text-sm text-gray-400">—</span>
+          <?php endif; ?>
         </div>
       </div>
     </div>
 
     <!-- Content -->
     <div class="mt-14 space-y-6 text-gray-600 leading-8 text-lg">
-      <h2 class="text-3xl font-bold text-gray-900 tracking-tight">
-        About this project
-      </h2>
-
-      <p>
-        The Business Platform was designed to help teams manage their daily
-        operations in one place. From tracking customers to handling
-        internal workflows, the goal was to make complex tasks feel simple.
-      </p>
-
-      <p>
-        We focused on a clean interface, fast navigation and a scalable
-        component system — so the product could grow without becoming
-        messy.
-      </p>
-
-      <h3 class="text-xl font-bold text-gray-900 pt-4">
-        The challenge
-      </h3>
-
-      <p>
-        Existing tools were slow, cluttered and hard to use. Users needed
-        something that felt fast and intuitive from the first click.
-      </p>
-
-      <h3 class="text-xl font-bold text-gray-900 pt-4">
-        What we built
-      </h3>
-
-      <ul class="space-y-3 pl-5 list-disc marker:text-primary">
-        <li>A modular dashboard with customizable widgets</li>
-        <li>Real-time data updates and notifications</li>
-        <li>Role-based access control and permissions</li>
-        <li>A fully responsive layout for mobile and desktop</li>
-      </ul>
-
-      <p>
-        The result is a platform that feels modern, responsive and ready to
-        scale with the business.
-      </p>
+      <?php
+      // محتوای اصلی پست
+      if (have_posts()) :
+          while (have_posts()) : the_post();
+              the_content();
+          endwhile;
+      endif;
+      ?>
     </div>
 
     <!-- Project Links -->
-    <div class="flex flex-wrap gap-3 mt-14 pt-10 border-t border-gray-200">
-      <a href="#"
-        class="inline-flex items-center gap-2 px-6 py-3 bg-gray-950 text-white rounded-lg text-sm font-medium hover:bg-primary transition">
-        View live demo <span>↗</span>
-      </a>
-      <a href="#"
-        class="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 text-gray-900 rounded-lg text-sm font-medium hover:border-primary hover:text-primary transition">
-        Source code <span>↗</span>
-      </a>
-    </div>
+    <?php if ($live_url || $source_url): ?>
+      <div class="flex flex-wrap gap-3 mt-14 pt-10 border-t border-gray-200">
+        <?php if ($live_url): ?>
+          <a href="<?php echo esc_url($live_url); ?>" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 px-6 py-3 bg-gray-950 text-white rounded-lg text-sm font-medium hover:bg-primary transition">
+            View live demo <span>↗</span>
+          </a>
+        <?php endif; ?>
+
+        <?php if ($source_url): ?>
+          <a href="<?php echo esc_url($source_url); ?>" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 text-gray-900 rounded-lg text-sm font-medium hover:border-primary hover:text-primary transition">
+            Source code <span>↗</span>
+          </a>
+        <?php endif; ?>
+      </div>
+    <?php endif; ?>
 
     <!-- Prev / Next -->
-    <div class="flex justify-between items-center gap-6 mt-16 pt-10 border-t border-gray-200">
-      <div>
-        <p class="text-xs uppercase tracking-wider text-gray-400 font-semibold">Previous</p>
-        <a href="project-single.html" class="text-base font-medium mt-1 inline-block hover:text-primary transition">
-          ← Analytics Dashboard
-        </a>
-      </div>
+    <?php
+    $prev_post = get_previous_post();
+    $next_post = get_next_post();
+    ?>
 
-      <div class="text-right">
-        <p class="text-xs uppercase tracking-wider text-gray-400 font-semibold">Next</p>
-        <a href="project-single.html" class="text-base font-medium mt-1 inline-block hover:text-primary transition">
-          Corporate Website →
-        </a>
+    <?php if ($prev_post || $next_post): ?>
+      <div class="flex justify-between items-center gap-6 mt-16 pt-10 border-t border-gray-200">
+
+        <div class="max-w-[45%]">
+          <?php if ($prev_post): ?>
+            <p class="text-xs uppercase tracking-wider text-gray-400 font-semibold">Previous</p>
+            <a href="<?php echo esc_url(get_permalink($prev_post)); ?>"
+               class="text-base font-medium mt-1 inline-block hover:text-primary transition">
+              ← <?php echo esc_html(get_the_title($prev_post)); ?>
+            </a>
+          <?php endif; ?>
+        </div>
+
+        <div class="text-right max-w-[45%]">
+          <?php if ($next_post): ?>
+            <p class="text-xs uppercase tracking-wider text-gray-400 font-semibold">Next</p>
+            <a href="<?php echo esc_url(get_permalink($next_post)); ?>"
+               class="text-base font-medium mt-1 inline-block hover:text-primary transition">
+              <?php echo esc_html(get_the_title($next_post)); ?> →
+            </a>
+          <?php endif; ?>
+        </div>
+
       </div>
-    </div>
+    <?php endif; ?>
 
   </div>
 </main>
 
-
-<?php get_footer() ?>
+<?php get_footer(); ?>
